@@ -11,10 +11,22 @@ from app.schemas import (
 )
 from app.services.analysis_service import build_analysis_response, calculate_score
 from app.services.script_service import generate_negotiation_script
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Notice Negotiator API")
+origins = [
+    "http://localhost:5173",   # Vite dev
+    "http://localhost:3000",   # React dev (just in case)
+    "https://your-vercel-app.vercel.app"  # later replace
+]
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.on_event("startup")
 def startup_event() -> None:
     init_db()

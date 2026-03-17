@@ -1,0 +1,57 @@
+[
+  {
+    "name": "No offer plus service should be low",
+    "payload": {
+      "company_type": "service",
+      "notice_period": 90,
+      "offer_in_hand": false,
+      "buyout_allowed": false,
+      "project_critical": "high",
+      "manager_type": "toxic"
+    }
+  },
+  {
+    "name": "Offer plus startup should be high",
+    "payload": {
+      "company_type": "startup",
+      "notice_period": 30,
+      "offer_in_hand": true,
+      "buyout_allowed": true,
+      "project_critical": "low",
+      "manager_type": "supportive"
+    }
+  },
+  {
+    "name": "Product company with medium risk should be medium",
+    "payload": {
+      "company_type": "product",
+      "notice_period": 60,
+      "offer_in_hand": true,
+      "buyout_allowed": false,
+      "project_critical": "medium",
+      "manager_type": "neutral"
+    }
+  },
+  {
+    "name": "Startup without offer but supportive manager stays medium",
+    "payload": {
+      "company_type": "startup",
+      "notice_period": 30,
+      "offer_in_hand": false,
+      "buyout_allowed": true,
+      "project_critical": "low",
+      "manager_type": "supportive"
+    }
+  },
+  {
+    "name": "Service company with offer and high criticality stays medium",
+    "payload": {
+      "company_type": "service",
+      "notice_period": 60,
+      "offer_in_hand": true,
+      "buyout_allowed": true,
+      "project_critical": "high",
+      "manager_type": "neutral"
+    }
+  }
+]

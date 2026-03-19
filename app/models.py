@@ -35,3 +35,9 @@ class ScriptMode(str, Enum):
     safe = "safe"
     balanced = "balanced"
     aggressive = "aggressive"
+
+
+class RiskLevel(str, Enum):
+    low = "Low"
+    medium = "Medium"
+    high = "High"

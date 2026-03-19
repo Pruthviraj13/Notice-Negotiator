@@ -6,6 +6,7 @@ from app.models import (
     ManagerType,
     NoticePeriod,
     ProjectCriticality,
+    RiskLevel,
     ScriptMode,
 )
 
@@ -38,6 +39,16 @@ class ScriptRequest(AnalyzeRequest):
 
 class ScriptResponse(BaseModel):
     script: str
+
+
+class SimulationRequest(AnalyzeRequest):
+    mode: ScriptMode = ScriptMode.balanced
+
+
+class SimulationResponse(BaseModel):
+    manager_response: str
+    your_reply: str
+    risk_level: RiskLevel
 
 
 class FeedbackRequest(BaseModel):

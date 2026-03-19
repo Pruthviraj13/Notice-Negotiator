@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import init_db, save_feedback, save_scenario
 from app.schemas import (
@@ -8,17 +9,14 @@ from app.schemas import (
     FeedbackResponse,
     ScriptRequest,
     ScriptResponse,
+    SimulationRequest,
+    SimulationResponse,
 )
 from app.services.analysis_service import build_analysis_response, calculate_score
 from app.services.script_service import generate_negotiation_script
-from fastapi.middleware.cors import CORSMiddleware
+from app.services.simulation_service import simulate_manager_response
 
 app = FastAPI(title="Notice Negotiator API")
-origins = [
-    "http://localhost:5173",   # Vite dev
-    "http://localhost:3000",   # React dev (just in case)
-    "https://your-vercel-app.vercel.app"  # later replace
-]
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 @app.on_event("startup")
 def startup_event() -> None:
     init_db()
@@ -52,6 +52,12 @@ def generate_script(payload: ScriptRequest) -> ScriptResponse:
     except RuntimeError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     return ScriptResponse(script=script)
+
+
+@app.post("/simulate", response_model=SimulationResponse)
+def simulate(payload: SimulationRequest) -> SimulationResponse:
+    score = calculate_score(payload)
+    return simulate_manager_response(payload, score)
 
 
 @app.post("/feedback", response_model=FeedbackResponse)
